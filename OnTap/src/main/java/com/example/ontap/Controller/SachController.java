@@ -1,5 +1,6 @@
 package com.example.ontap.Controller;
 
+import com.example.ontap.Entity.NhanVien;
 import com.example.ontap.Entity.Sach;
 import com.example.ontap.Entity.SachRepose;
 import com.example.ontap.Repository.SacchRepose;
@@ -8,13 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class SachController {
@@ -35,5 +34,26 @@ public class SachController {
     public ResponseEntity Add(@RequestBody Sach sach){
         Sach save = repository.save(sach);
         return ResponseEntity.ok(save);
+    }
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id){
+        repository.deleteById(id);
+        return "xoa thanh cong";
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Sach> updateNV(@PathVariable Integer id, @RequestBody Sach sach) {
+        Optional<Sach> update = repository.findById(id);
+        if (update.isPresent()) {
+            Sach sach1 = update.get();
+            sach1.setMa(sach.getMa());
+            sach1.setTen(sach.getTen());
+            sach1.setDonGia(sach.getDonGia());
+            sach1.setSoTrang(sach.getSoTrang());
+            sach1.setNxb(sach.getNxb());
+
+            repository.save(sach1);
+            return ResponseEntity.ok(sach1);
+        }
+        return ResponseEntity.notFound().build();
     }
 }

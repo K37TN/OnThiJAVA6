@@ -18,7 +18,9 @@ public class Sach {
     private Integer id;
     private String ten;
     private  String ma;
+
     private Integer soTrang;
+    private Double donGia;
    @ManyToOne
     @JoinColumn(name = "id_nxb")
     private NXB nxb;

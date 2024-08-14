@@ -7,7 +7,10 @@ import com.example.ontap.Repository.sachRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -27,5 +30,10 @@ public class SachController {
     @GetMapping("/hienthi3")
     public Page<SachRepose> getAll(Pageable pageable){
         return sacchRepose.getAll(pageable);
+    }
+    @PostMapping("/add")
+    public ResponseEntity Add(@RequestBody Sach sach){
+        Sach save = repository.save(sach);
+        return ResponseEntity.ok(save);
     }
 }

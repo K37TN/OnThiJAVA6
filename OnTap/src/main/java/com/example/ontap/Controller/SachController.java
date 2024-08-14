@@ -40,6 +40,11 @@ public class SachController {
         repository.deleteById(id);
         return "xoa thanh cong";
     }
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Sach> showdetail(@PathVariable Integer id){
+      Optional<Sach> detail = repository.findById(id);
+      return ResponseEntity.ok(detail.get());
+    }
     @PutMapping("/update/{id}")
     public ResponseEntity<Sach> updateNV(@PathVariable Integer id, @RequestBody Sach sach) {
         Optional<Sach> update = repository.findById(id);
